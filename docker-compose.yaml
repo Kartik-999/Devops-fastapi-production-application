@@ -8,8 +8,6 @@ services:
             dockerfile: Dockerfile.yaml
         networks:
             project:
-        environment:
-            - "POSTGRES_PASSWORD=${YourDbPassword}"
         # ports:
         #     - "8000:8000"
         depends_on:
@@ -18,6 +16,7 @@ services:
         environment:
             - "DATABASE_URL=postgresql://postgres:12345@back_end:5432/studentdb"
             - "REDIS_URL=redis://middle_end:6379"
+            - "POSTGRES_PASSWORD=${YourDbPassword}"
     middle_end:
         container_name: "redis"
         image: redis:7-alpine
