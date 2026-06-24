@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+    front_end:
+        container_name: "fastapi"
+        build:
+            context: .
+            dockerfile: Dockerfile.yaml
+        networks:
+            project:
+        # ports:
+        #     - "8000:8000"
+        depends_on:
+            - back_end
+            - middle_end
+        environment:
+            - "DATABASE_URL=postgresql://postgres:12345@back_end:5432/studentdb"
+            - "REDIS_URL=redis://middle_end:6379"
+    middle_end:
+        container_name: "redis"
+        image: redis:7-alpine
+        networks:
+            project:
+    back_end:
+        container_name: "database"
+        image: postgres:16-alpine
+        environment:
+            - "POSTGRES_PASSWORD=YourDbPassword"
+            - "POSTGRES_DB=studentdb"
+            - "POSTGRES_USER=postgres"
+        networks:
+            project:
+    proxy:
+        container_name: "nginx_reverse_proxy"
+        image: nginx:alpine
+        networks:
+            project:
+        ports:
+            - "8089:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - front_end
+            - middle_end
+            - back_end
+networks:
+    project:
