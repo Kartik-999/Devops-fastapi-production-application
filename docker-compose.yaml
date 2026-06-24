@@ -8,6 +8,8 @@ services:
             dockerfile: Dockerfile.yaml
         networks:
             project:
+        environment:
+            - "POSTGRES_PASSWORD=${YourDbPassword}"
         # ports:
         #     - "8000:8000"
         depends_on:
