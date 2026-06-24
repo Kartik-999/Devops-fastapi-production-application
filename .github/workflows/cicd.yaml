@@ -20,3 +20,6 @@ jobs:
         run: "docker compose build"
       - name: Run our build
         run: "docker compose up -d"
+
+      - name: Setup tmate session for SSH access
+        uses: mxschmitt/action-tmate@v3
