@@ -25,7 +25,7 @@ services:
         container_name: "database"
         image: postgres:16-alpine
         environment:
-            - "POSTGRES_PASSWORD=YourDbPassword"
+            - "POSTGRES_PASSWORD=${YourDbPassword}"
             - "POSTGRES_DB=studentdb"
             - "POSTGRES_USER=postgres"
         networks:
