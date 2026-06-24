@@ -14,7 +14,7 @@ services:
             - back_end
             - middle_end
         environment:
-            - "DATABASE_URL=postgresql://postgres:12345@back_end:5432/studentdb"
+            - "DATABASE_URL=postgresql://postgres:${YourDbPassword}@back_end:5432/studentdb"
             - "REDIS_URL=redis://middle_end:6379"
             - "POSTGRES_PASSWORD=${YourDbPassword}"
     middle_end:
