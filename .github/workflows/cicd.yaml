@@ -25,7 +25,7 @@ jobs:
       
       - name: deploy to EC2
         run: |
-          echo "${{secrets.pem_key}}" 1>key.pem
-          chmod 600 key.pem
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{secrets.EC2_user}}@${{secrets.EC2_IP}} "cd ~/student-api && git pull origin CICD && docker compose down && docker compose up --build -d"
-          rm -rf key.pem
+          sudo echo "${{secrets.pem_key}}" 1>key.pem
+          sudo chmod 600 key.pem
+          sudo ssh -o StrictHostKeyChecking=no -i key.pem ${{secrets.EC2_user}}@${{secrets.EC2_IP}} "cd ~/student-api && git pull origin CICD && echo "YourDbPassword=${{secrets.mydbpassword}}" 1>.env && docker compose down && docker compose up --build -d"
+          sudo rm -rf key.pem
