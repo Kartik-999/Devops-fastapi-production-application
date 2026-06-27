@@ -11,8 +11,10 @@ services:
         # ports:
         #     - "8000:8000"
         depends_on:
-            - back_end
-            - middle_end
+            back_end:
+                condition: service_healthy
+            middle_end:
+                condition: service_started
         environment:
             - "DATABASE_URL=postgresql://postgres:${YourDbPassword}@back_end:5432/studentdb"
             - "REDIS_URL=redis://middle_end:6379"
@@ -31,6 +33,11 @@ services:
             - "POSTGRES_USER=postgres"
         networks:
             project:
+        healthcheck:
+            test: ["CMD-SHELL","pg_isready -U postgres"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
     proxy:
         container_name: "nginx_reverse_proxy"
         image: nginx:alpine
