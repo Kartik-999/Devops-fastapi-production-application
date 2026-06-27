@@ -23,7 +23,7 @@ jobs:
       - name: Run our build
         run: "docker compose up -d"
       
-      - name: deploy to EC2 instance
+      - name: deploy to EC2
         run: |
           sudo echo "${{secrets.pem_key}}" 1>key.pem
           sudo chmod 600 key.pem
